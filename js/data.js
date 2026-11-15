@@ -5,7 +5,10 @@
 
 import { DATA_CONFIG } from './data-config.js';
 
-const BASE = './data/';
+const ON_GITHUB_PAGES = typeof location === 'object' && location.hostname.endsWith('.github.io');
+const BASE = ON_GITHUB_PAGES
+  ? 'https://raw.githubusercontent.com/hasanahmad211a/Correction-VR/main/data/'
+  : './data/';
 const cache = new Map();        // url or key -> Promise
 const csvIndexCache = new Map(); // cacheKey -> Promise<Map<year, FeatureCollection>>
 const csvOverrides = new Map();  // `${scopePath}:${kind}` -> string (url) | File | Blob
@@ -180,6 +183,12 @@ async function streamCsv(source, onRow, chunkRows = DATA_CONFIG.chunkRows) {
       return true;
     }
     return false;
+  }
+
+  // Keep large source CSVs out of the GitHub Pages artifact. The published app
+  // reads them from the repository's raw content endpoint; local runs stay local.
+  if (ON_GITHUB_PAGES && source.startsWith('./data/')) {
+    source = `${BASE}${source.slice('./data/'.length)}`;
   }
 
   let res;
@@ -1140,3 +1149,4 @@ export function annualMedian(series, varId, waterBodyId) {
   const entry = getIndexedVariable(series, varId, waterBodyId);
   return entry ? entry.median : null;
 }
+

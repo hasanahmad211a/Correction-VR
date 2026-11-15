@@ -10,8 +10,11 @@ Observable Plot 0.6). Runs from any static server and from **GitHub Pages** as i
 
 ## Run it
 
-- **GitHub Pages:** repo → Settings → Pages → *Deploy from a branch* → this branch, `/ (root)`. Done.
-- **Locally:** `python3 -m http.server 8000` in this folder, then open http://localhost:8000.
+- **Windows:** double-click `START-HERE.cmd`. It starts a local server and opens the site in your browser. Node.js 18 or later must be installed.
+- **Other platforms:** run `node serve-local.mjs` from this folder, then open http://127.0.0.1:4173.
+
+- **GitHub Pages:** push to `main`; `.github/workflows/deploy-pages.yml` publishes the interface automatically. The full source data remains in the public repository and is fetched from its raw-content URLs, keeping the Pages artifact below GitHub's 1 GB published-site limit.
+- **Published site:** https://hasanahmad211a.github.io/Correction-VR/
 
 ## What is on the page
 
@@ -46,4 +49,5 @@ js/map/map.js  fires.js  water.js  air.js  legend.js         MapLibre map and la
 data/regions.json  data/<scope>/{geo,rivers}.geojson  {fires,air,series}.csv
 pipeline/                                                   optional Python preprocessing P0–P7
 ```
+
 

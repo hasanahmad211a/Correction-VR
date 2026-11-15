@@ -71,10 +71,11 @@ export async function main() {
   syncFrame(store.get());
   store.subscribe(syncFrame);
 
-  for (const entry of MODULES) {
-    await mountModule(entry.id, entry.mod);
-  }
+  // Each panel owns its own data requests and error handling. Mount them together so
+  // a large map/data load does not leave the rest of the page stuck on placeholders.
+  await Promise.all(MODULES.map(({ id, mod }) => mountModule(id, mod)));
   document.documentElement.dataset.ready = 'true';
 }
 
 main().catch((err) => console.info('main: unexpected failure', err));
+

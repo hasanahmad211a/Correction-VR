@@ -3,6 +3,7 @@
 
 const STYLE = `
 .hdr-root { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 24px; }
+.hdr-kicker { margin: 0 0 5px; color: var(--c-water); font-family: var(--f-mono); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .hdr-brand h1 { font-family: var(--f-serif); font-size: 27px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.15; margin: 0; }
 .hdr-sub { margin: 4px 0 0; font-size: 13.5px; color: var(--c-muted); letter-spacing: 0.005em; }
 .hdr-sub strong { color: var(--c-ink); font-weight: 600; }
@@ -94,12 +95,15 @@ export async function mount(el, ctx) {
 
   const brand = document.createElement('div');
   brand.className = 'hdr-brand';
+  const kicker = document.createElement('p');
+  kicker.className = 'hdr-kicker';
+  kicker.textContent = 'A satellite field report';
   const h1 = document.createElement('h1');
   h1.textContent = 'Ember to Ocean';
   const sub = document.createElement('p');
   sub.className = 'hdr-sub';
-  sub.innerHTML = `<strong>Wildfire, air, water &amp; salmon</strong> · ${y0}–${y1} · NASA Space Apps 2026`;
-  brand.append(h1, sub);
+  sub.innerHTML = `<strong>Following wildfire signals downstream</strong> · ${y0}–${y1} · NASA Space Apps 2026`;
+  brand.append(kicker, h1, sub);
 
   const controls = document.createElement('div');
   controls.className = 'hdr-controls';
@@ -149,3 +153,4 @@ export async function mount(el, ctx) {
   store.subscribe(render);
   render(store.get());
 }
+
